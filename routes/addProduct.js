@@ -1,5 +1,5 @@
 const {Router}= require('express');
-const Products = require('../models/productsModel');
+const Product = require('../models/productsModel');
 const router = Router();
 
 router.get('/', (req, res)=>{
@@ -10,10 +10,19 @@ router.get('/', (req, res)=>{
 })
 
 router.post('/', async (req, res)=> {
-    const products = new Products(req.body.name, req.body.price, req.body.img);
+    const product = new Product({
+       name: req.body.name,
+       price: req.body.price,
+       img: req.body.img
+    });
 
-    await products.save();
-    res.redirect('/products');
+    try {
+        await product.save();
+        res.redirect('/products');
+    } catch (err){
+        console.log(err);
+    }
+
 })
 
 module.exports=router;
