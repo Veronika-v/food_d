@@ -43,6 +43,14 @@
             -1px 1px 1px #878c00;
 }
 
+.btn.redd{
+    background-color: red;
+}
+
+.btn.redd:hover{
+    background-color: darkred;
+}
+
 .btn:hover{
     background-color: #d7b206;
 }
@@ -52,4 +60,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between; //одинаков простр-во между кнопками
+}
+
+.product-form{
+    margin-bottom: 1rem;
 }

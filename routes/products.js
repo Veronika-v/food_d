@@ -11,6 +11,17 @@ router.get('/', async (req, res)=>{
     });
 })
 
+router.post('/remove', async (req,res)=>{
+    try{
+        await Product.deleteOne({_id: req.body.id});
+        res.redirect('/products');
+    }
+    catch (e){
+        console.log(e);
+    }
+
+})
+
 router.get('/:id/edit', async (req, res)=>{
     if(!req.query.allow){
         return res.redirect('/')
