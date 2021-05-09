@@ -1,0 +1,30 @@
+<nav>
+    <div class="nav-wrapper">
+        <a href="/" class="brand-logo">Food Delivery</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down" >
+            {{#if isHome}}
+                <li class="active"><a href="/">Main page</a></li>
+            {{else}}
+                <li ><a href="/">Main page</a></li>
+            {{/if}}
+
+            {{#if isProducts}}
+                <li class="active"><a href="/products">List of products</a></li>
+            {{else}}
+                <li><a href="/products">List of products</a></li>
+            {{/if}}
+
+            {{#if isAddProduct}}
+                <li class="active"><a href="/addProduct">Add a new product</a></li>
+            {{else}}
+                <li><a href="/addProduct">Add a new product</a></li>
+            {{/if}}
+
+            {{#if isCard}}
+                <li class="active"><a href="/card">Basket</a></li>
+            {{else}}
+                <li><a href="/card">Basket</a></li>
+            {{/if}}
+        </ul>
+    </div>
+</nav>

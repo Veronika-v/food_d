@@ -1,0 +1,55 @@
+.nav-wrapper{
+    padding: 0 2rem;
+    background-color: #ffd800;
+    font-weight: bold;
+    text-shadow:
+            1px 1px 1px #8c7e00,
+            -1px 1px 1px #8c7e00;
+}
+
+.price{
+    font-size: 1.5rem;
+}
+
+.price.small{
+    font-size: 1rem;
+}
+
+.product{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product h1{
+    margin-bottom: 2rem;
+}
+
+.product img{
+    max-width: 600px;
+    height: auto;
+}
+
+.product .price.big{
+    font-size: 2rem;
+}
+
+.btn{
+    background-color: #ffd800;
+    font-weight: bold;
+    text-shadow:
+            1px 1px 1px #878c00,
+            -1px 1px 1px #878c00;
+}
+
+.btn:hover{
+    background-color: #d7b206;
+}
+
+
+.card-action.actions{
+    display: flex;
+    align-items: center;
+    justify-content: space-between; //одинаков простр-во между кнопками
+}
