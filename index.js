@@ -7,8 +7,8 @@ const exphbs = require('express-handlebars');
 const homeRoutes = require('./routes/home');
 const productsRoutes = require('./routes/products');
 const addProductRoutes = require('./routes/addProduct');
-const cardRoutes = require('./routes/card');
-const User =require('./models/user');
+const cardRoutes = require('./routes/basket');
+const User =require('./models/userModel');
 
 const PORT = process.env.PORT || 3000;
 const app =express();
