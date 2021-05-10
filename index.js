@@ -1,7 +1,7 @@
 const express =require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const Handlebars = require('handlebars')
+const Handlebars = require('handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 const exphbs = require('express-handlebars');
 const homeRoutes = require('./routes/home');
@@ -9,6 +9,7 @@ const productsRoutes = require('./routes/products');
 const addProductRoutes = require('./routes/addProduct');
 const cardRoutes = require('./routes/basket');
 const User =require('./models/userModel');
+const ordersRoutes = require('./routes/orders');
 
 const PORT = process.env.PORT || 3000;
 const app =express();
@@ -41,6 +42,7 @@ app.use('/', homeRoutes);
 app.use('/products', productsRoutes);
 app.use('/addProduct', addProductRoutes);
 app.use('/card', cardRoutes);
+app.use('/orders', ordersRoutes);
 
 async function start(){
     try {

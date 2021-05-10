@@ -5,9 +5,25 @@ const toCurrency = price =>{
     }).format(price);
 }
 
+const toDate = date =>{
+    return new Intl.DateTimeFormat('en-EU', {
+        day:'2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    }).format(new Date(date));
+}
+
 document.querySelectorAll('.price').forEach(node=>{
     node.textContent = toCurrency(node.textContent);
 });
+
+document.querySelectorAll('.date').forEach(node=>{
+    node.textContent = toDate(node.textContent);
+});
+
 
 const $card = document.querySelector('#card');
 if($card){
@@ -27,7 +43,7 @@ if($card){
                                 <td class="price small">`+toCurrency(p.price)+`</td>
                                 <td>${p.count}</td>
                                 <td>
-                                    <button class="btn js-remove" data-id="${p.id}">Delete</button>
+                                    <button class="btn js-remove redd" data-id="${p.id}">Delete</button>
                                 </td>
                             </tr>
                             `

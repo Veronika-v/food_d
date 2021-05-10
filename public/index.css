@@ -51,6 +51,14 @@
     background-color: darkred;
 }
 
+.btn.ggreen{
+    background-color: #29a529;
+}
+
+.btn.ggreen:hover{
+    background-color: darkgreen;
+}
+
 .btn:hover{
     background-color: #d7b206;
 }
