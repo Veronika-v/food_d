@@ -73,3 +73,17 @@
 .product-form{
     margin-bottom: 1rem;
 }
+
+.auth{
+    padding-top: 0.5rem;
+}
+
+.title{
+    text-align: center;
+    color: #ffd800;
+    text-shadow: black 0 0 0,
+    black -1px -1px 0,
+    black -1px 1px 0,
+    black 1px -1px 0;
+    font-weight: bold;
+}

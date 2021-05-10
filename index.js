@@ -10,6 +10,8 @@ const addProductRoutes = require('./routes/addProduct');
 const cardRoutes = require('./routes/basket');
 const User =require('./models/userModel');
 const ordersRoutes = require('./routes/orders');
+const authRoutes = require('./routes/auth');
+
 
 const PORT = process.env.PORT || 3000;
 const app =express();
@@ -43,6 +45,9 @@ app.use('/products', productsRoutes);
 app.use('/addProduct', addProductRoutes);
 app.use('/card', cardRoutes);
 app.use('/orders', ordersRoutes);
+app.use('/auth', authRoutes);
+
+
 
 async function start(){
     try {
