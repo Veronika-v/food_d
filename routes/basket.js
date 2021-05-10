@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const router= Router();
 const Product = require('../models/productModel');
+const auth = require('../middleware/auth');
 
 function mapBasketItems(basket){
     return basket.items.map( p => ({
@@ -16,13 +17,14 @@ function calculateTotalPrice(products){
     }, 0);// по умолч price=0
 }
 
-router.post('/add', async (req, res) =>{
+router.post('/add', auth, async (req, res) =>{
     const product = await Product.findById(req.body.id);
+
     await req.user.addToBasket(product);
     res.redirect('/card');
 })
 
-router.delete('/remove/:id', async (req, res)=>{
+router.delete('/remove/:id', auth, async (req, res)=>{
     await req.user.removeFromBasket(req.params.id);
     const user = await req.user.populate('basket.items.productId').execPopulate();
 
@@ -35,7 +37,7 @@ router.delete('/remove/:id', async (req, res)=>{
     res.status(200).json(basket);
 })
 
-router.get('/', async (req, res)=>{
+router.get('/', auth, async (req, res)=>{
     const user = await req.user
         .populate('basket.items.productId')
         .execPopulate();

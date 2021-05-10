@@ -16,11 +16,14 @@
                     </div>
                     <div class="card-action actions" >
                         <a href="/products/{{id}}" target="_blank">Look the description</a>
-                        <a href="/products/{{id}}/edit?allow=true" >Edit </a>
-                        <form action="/card/add" method="post">
-                            <input type="hidden" name="id" value="{{id}}">
-                            <button type="submit" class="btn ">Buy</button>
-                        </form>
+                        {{#if @root.isAuth}}
+                            <a href="/products/{{id}}/edit?allow=true" >Edit </a>
+                            <form action="/card/add" method="post">
+                                <input type="hidden" name="_csrf" value="{{@root.csrf}}">
+                                <input type="hidden" name="id" value="{{id}}">
+                                <button type="submit" class="btn ">Buy</button>
+                            </form>
+                        {{/if}}
                     </div>
                 </div>
             </div>

@@ -21,12 +21,20 @@
                     <span class="helper-text" data-error="Enter the password"></span>
                 </div>
 
+                <input type="hidden" name="_csrf" value="{{csrf}}">
+
                 <button class=" btn" type="submit">Log in</button>
             </form>
         </div>
         <div id="register" class="col s6 offset-s3">
             <h3 class="title">Registration</h3>
             <form action="/auth/register" method="POST">
+                <div class="input-field">
+                    <input id="name" name="name" type="text" class="validate" required>
+                    <label for="name">Name</label>
+                    <span class="helper-text" data-error="Enter the name"></span>
+                </div>
+
                 <div class="input-field">
                     <input id="remail" name="email" type="email" class="validate" required >
                     <label for="remail">Email: </label>
@@ -44,6 +52,8 @@
                     <label for="confirm">Confirm Password </label>
                     <span class="helper-text" data-error="Enter the same password"></span>
                 </div>
+
+                <input type="hidden" name="_csrf" value="{{csrf}}">
 
                 <button class=" btn" type="submit">Register</button>
             </form>
