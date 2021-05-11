@@ -16,7 +16,7 @@ const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
 const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
-
+const keys = require('./keys/indexKeys');
 
 const PORT = process.env.PORT || 3000;
 const app =express();
@@ -28,10 +28,10 @@ const hbs= exphbs.create({
     handlebars: allowInsecurePrototypeAccess(Handlebars)
 })
 
-const MONGODB_URI = 'mongodb+srv://veronika:XkX5yolkx19lEWTq@cluster0.ic3ox.mongodb.net/FoodDelivery';
+
 const store = new MongoStore({
     collection: 'sessions',
-    uri: MONGODB_URI
+    uri: keys.MONGODB_URI
 })
 
 app.engine('hbs', hbs.engine);
@@ -43,7 +43,7 @@ app.set('views', 'views');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended: true}));
 app.use(session({
-    secret: 'some secret',
+    secret: keys.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: store
@@ -67,7 +67,7 @@ app.use('/auth', authRoutes);
 async function start(){
     try {
 
-        await mongoose.connect(MONGODB_URI, {
+        await mongoose.connect(keys.MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false
