@@ -13,7 +13,20 @@ router.get('/', auth, (req, res)=>{
 })
 
 router.post('/', auth, productsValidators, async (req, res)=> {
+    const errors = validationResult(req);
 
+    if(!errors.isEmpty()){
+        return res.status(422).render('addProduct', {
+            title: 'Add a new product',
+            isAddProduct: true,
+            error: errors.array()[0].msg,
+            data: {
+                name: req.body.name,
+                price: req.body.price,
+                img: req.body.img
+            }
+        })
+    }
 
     const product = new Product({
        name: req.body.name,

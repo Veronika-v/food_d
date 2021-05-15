@@ -62,5 +62,14 @@ exports.loginValidators = [
 
 
 exports.productsValidators = [
+    body('name')
+        .isLength({min: 3, max: 30})
+        .withMessage('Name of the product should be between 3 and 30')
+        .trim(),
 
+    body('price')
+        .isNumeric().withMessage('The price should be numeric'),
+
+    body('img', 'Enter the correct URL')
+        .isURL()
 ]

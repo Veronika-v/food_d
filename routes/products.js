@@ -1,7 +1,9 @@
 const {Router}= require('express');
 const Product = require('../models/productModel');
+const {validationResult} = require('express-validator');
 const router = Router();
 const auth = require('../middleware/auth');
+const {productsValidators} = require('../utils/validators');
 
 router.get('/', async (req, res)=>{
     const products = await Product.find();
@@ -35,8 +37,14 @@ router.get('/:id/edit', auth, async (req, res)=>{
     })
 })
 
-router.post('/edit', auth, async (req, res)=>{
+router.post('/edit', auth, productsValidators,  async (req, res)=>{
+    const errors = validationResult(req);
     const {id}= req.body;
+
+    if(!errors.isEmpty()){
+        return res.status(422).redirect(`/products/${id}/edit?allow=true`);
+    }
+
     delete req.body.id;
     await Product.findByIdAndUpdate(id, req.body);
     res.redirect('/products');

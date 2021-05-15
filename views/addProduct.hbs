@@ -1,20 +1,24 @@
 <h1 class="title">Add a new product</h1>
 
+{{#if error}}
+    <p class="alert">{{error}}</p>
+{{/if}}
+
 <form action="/addProduct" method="POST">
     <div class="input-field">
-        <input id="name" name="name" type="text" class="validate" required >
+        <input id="name" name="name" type="text" class="validate" required value="{{data.name}}">
         <label for="name">Name: </label>
         <span class="helper-text" data-error="Enter the valid name"></span>
     </div>
 
     <div class="input-field">
-        <input id="price" name="price" type="text" class="validate" required >
+        <input id="price" name="price" type="text" class="validate" required  value="{{data.price}}">
         <label for="price">Price: </label>
         <span class="helper-text" data-error="Enter the valid price"></span>
     </div>
 
     <div class="input-field">
-        <input id="img" name="img" type="text" class="validate" required>
+        <input id="img" name="img" type="text" class="validate" required value="{{data.img}}">
         <label for="img">URL picture: </label>
         <span class="helper-text" data-error="Enter the valid URL"></span>
     </div>
