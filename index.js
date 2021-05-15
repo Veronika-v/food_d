@@ -16,6 +16,7 @@ const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
 const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
+const errorHandler = require('./middleware/error');
 const keys = require('./keys/indexKeys');
 
 const PORT = process.env.PORT || 3000;
@@ -62,6 +63,7 @@ app.use('/card', cardRoutes);
 app.use('/orders', ordersRoutes);
 app.use('/auth', authRoutes);
 
+app.use(errorHandler);
 
 
 async function start(){
