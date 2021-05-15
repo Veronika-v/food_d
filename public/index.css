@@ -101,3 +101,12 @@
 .tab:hover{
     background: rgba(253, 229, 69, .1);
 }
+
+.avatar{
+    width: 350px;
+    height: auto;
+}
+
+.btn.h{
+    height: 38px;
+}
