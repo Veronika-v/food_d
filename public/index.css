@@ -88,6 +88,29 @@
     font-weight: bold;
 }
 
+.tabs .tab a{
+    color: #ffbf00;
+    font-weight: bold;
+}
+
+.tabs .tab a:hover{
+    color: #ffbf00;
+    text-shadow: black 0 0 0,
+    black -0.4px -0.4px 0,
+    black -0.4px 0.4px 0,
+    black 0.4px -0.4px 0;
+}
+
+.tabs .tab a.active{
+    background-color: rgba(253, 182, 2, .1) !important;
+    color: #ffbf00;
+    text-shadow: black 0 0 0,
+    black -0.4px -0.4px 0,
+    black -0.4px 0.4px 0,
+    black 0.4px -0.4px 0;
+}
+
+
 .alert{
     padding: .5rem 1rem;
     border-radius: 10px;
@@ -98,10 +121,6 @@
 }
 
 
-.tab:hover{
-    background: rgba(253, 229, 69, .1);
-}
-
 .avatar{
     width: 350px;
     height: auto;
@@ -109,4 +128,13 @@
 
 .btn.h{
     height: 38px;
+}
+
+label.active {
+    color: orange !important;
+}
+
+input:focus {
+    border-bottom: 1px solid orange !important;
+    box-shadow: 0 1px 0 0 orange !important;
 }
