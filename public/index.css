@@ -70,6 +70,12 @@
     justify-content: space-between; //одинаков простр-во между кнопками
 }
 
+.sp{
+    display: flex;
+    align-items: center;
+    justify-content: space-between; //одинаков простр-во между кнопками
+}
+
 .product-form{
     margin-bottom: 1rem;
 }

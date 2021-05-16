@@ -1,0 +1,36 @@
+<h1 class="title">All orders</h1>
+
+{{#if orders.length}}
+    {{#each orders}}
+        <div class="col s6 offset-s3">
+            <div class="card">
+                <div class="card-action">
+                    <span class="card-title">
+                        Order <small>{{_id}}</small>
+                    </span>
+                    <p class="date">Date: {{date}}</p>
+                    <p><em>{{user.name}}</em> ({{user.userId.email}})</p>
+
+                    <ol>
+                        {{#each products}}
+                            <li>
+                                <b>{{product.name}}</b> (x{{count}})
+                            </li>
+                        {{/each}}
+                    </ol>
+                    <hr>
+                    <div class="sp">
+                        <p>Total price:<span class="price">{{price}}</span> </p>
+                        <form action="/adminOrders/" method="post">
+                            <input type="hidden" name="_csrf" value="{{@root.csrf}}">
+                            <input type="hidden" name="id" value="{{_id}}">
+                            <button type="submit" class="btn ">Delivered</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+{{else}}
+    <p>No orders</p>
+{{/if}}

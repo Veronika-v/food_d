@@ -15,6 +15,7 @@ const productsRoutes = require('./routes/products');
 const addProductRoutes = require('./routes/addProduct');
 const cardRoutes = require('./routes/basket');
 const ordersRoutes = require('./routes/orders');
+const adminOrdersRoutes = require('./routes/adminOrders');
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
 const varMiddleware = require('./middleware/variables');
@@ -69,6 +70,7 @@ app.use('/products', productsRoutes);
 app.use('/addProduct', addProductRoutes);
 app.use('/card', cardRoutes);
 app.use('/orders', ordersRoutes);
+app.use('/adminOrders', adminOrdersRoutes);
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
 
