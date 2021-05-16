@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const router = Router();
 const Order = require('../models/orderModel');
+const OrderState = require('../models/orderStateModel');
 const auth = require('../middleware/auth');
 
 router.get('/', auth, async (req, res) =>{
@@ -38,12 +39,15 @@ router.post('/', auth, async (req, res) =>{
             product: {...i.productId._doc}
         }))
 
+        const state= await OrderState.findOne({state: 'Active'});
+
         const order= new Order({
             user: {
                 name: req.user.name,
                 userId: req.user
             },
-            products: products
+            products: products,
+            state: state
         })
 
         await order.save();

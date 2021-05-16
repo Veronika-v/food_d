@@ -1,6 +1,11 @@
 const {Schema, model} = require('mongoose');
 
 const orderSchema = new Schema({
+    state: {
+        type: Schema.Types.ObjectId,
+        ref: 'OrderState',
+        required: true
+    },
     products: [
         {
             product:
