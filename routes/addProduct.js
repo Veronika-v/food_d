@@ -34,7 +34,7 @@ router.post('/', auth, productsValidators, async (req, res)=> {
        price: req.body.price,
        img: req.body.img,
        description: req.body.description,
-       userId: req.user
+       //userId: req.user
     });
 
     try {

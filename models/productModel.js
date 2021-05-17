@@ -10,10 +10,10 @@ const productSchema = new Schema({
         required: true
     },
     img: String,
-    userId:{
+    /*userId:{
         type: Schema.Types.ObjectId,
         ref: 'User'
-    },
+    },*/
     description: String
 });
 

@@ -5,19 +5,20 @@ const OrderState = require('../models/orderStateModel');
 const auth = require('../middleware/auth');
 const mongoose = require('mongoose');
 
-function mapOrderItems(orders){
+/*function mapOrderItems(orders){
     return orders.items.map( o => ({
         ...o._doc,
         price: o.products.reduce((total, p)=>{
             return total += p.count * p.product.price
         }, 0)
     }))
-}
+}*/
 
 router.get('/', auth, async (req, res) =>{
     try{
+        const state= await OrderState.findOne({state: 'Active'});
         const orders = await Order.find({
-            'state': '60a1608b66764a273840fa1b' //active
+            'state': state
         }).populate('user.userId', 'email');
 
         res.render('adminOrders', {
@@ -41,8 +42,11 @@ router.post('/', auth, async (req, res) =>{
 
     try{
         const {id}= req.body;
-        console.log(JSON.stringify(req.body));
-        await Order.findByIdAndUpdate(id, {$set: { state: '60a161048b01ec207485d190'}}); //passive
+        //console.log(JSON.stringify(req.body));
+
+        const state= await OrderState.findOne({state: 'Passive'});
+
+        await Order.findByIdAndUpdate(id, {$set: { state: state}});
 
         res.redirect('/adminOrders');
 
