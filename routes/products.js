@@ -50,13 +50,13 @@ router.post('/edit', auth, productsValidators,  async (req, res)=>{
     res.redirect('/products');
 })
 
-router.get('/:id', async(req, res)=>{
+/*router.get('/:id', async(req, res)=>{
     const product = await Product.findById(req.params.id)
     res.render('product', {
         layout: 'empty',
         title: `Product ${product.name}`,
         product
     });
-})
+})*/
 
 module.exports=router;
