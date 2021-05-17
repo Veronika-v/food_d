@@ -47,7 +47,8 @@ router.post('/', auth, async (req, res) =>{
                 userId: req.user
             },
             products: products,
-            state: state
+            state: state,
+            address: req.body.address
         })
 
         await order.save();

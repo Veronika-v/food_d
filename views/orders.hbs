@@ -7,10 +7,11 @@
             <div class="card">
                 <div class="card-action">
                     <span class="card-title">
-                        Order <small>{{_id}}</small>
+                        <b>Order </b> <small>{{_id}}</small>
                     </span>
                     <p class="date">Date: {{date}}</p>
-                    <p><em>{{user.userId.name}}</em> ({{user.userId.email}})</p>
+                    <p><em><b>{{user.name}}</b></em> ({{user.userId.email}})</p>
+                    <p><em><b>Address:</b></em> {{address}}</p>
 
                     <ol>
                         {{#each products}}
@@ -21,7 +22,7 @@
                     </ol>
                     <hr>
 
-                    <p>Total price:<span class="price">{{price}}</span> </p>
+                    <p><em><b>Total price: </b></em><span class="price">{{price}}</span> </p>
                 </div>
             </div>
         </div>

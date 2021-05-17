@@ -28,6 +28,11 @@
         <p><b>Total Price: </b> <span class="price total">{{price}}</span></p>
 
         <form action="/orders" method="post">
+            <div class="input-field">
+                <input id="address" name="address" type="text" class="validate" required >
+                <label for="address">Delivery address: </label>
+                <span class="helper-text" data-error="Enter the valid address"></span>
+            </div>
             <input type="hidden" name="_csrf" value="{{csrf}}">
             <button type="submit" class="btn ggreen">Make an order</button>
         </form>

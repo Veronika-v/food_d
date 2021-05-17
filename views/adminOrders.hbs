@@ -6,10 +6,11 @@
             <div class="card">
                 <div class="card-action">
                     <span class="card-title">
-                        Order <small>{{_id}}</small>
+                        <b>Order</b> <small>{{_id}}</small>
                     </span>
-                    <p class="date">Date: {{date}}</p>
-                    <p><em>{{user.name}}</em> ({{user.userId.email}})</p>
+                    <p class="date">{{date}}</p>
+                    <p><em><b>{{user.name}}</b></em> ({{user.userId.email}})</p>
+                    <p><em><b>Address:</b></em> {{address}}</p>
 
                     <ol>
                         {{#each products}}
@@ -20,7 +21,7 @@
                     </ol>
                     <hr>
                     <div class="sp">
-                        <p>Total price:<span class="price">{{price}}</span> </p>
+                        <p><em><b>Total price: </b></em><span class="price">{{price}}</span> </p>
                         <form action="/adminOrders/" method="post">
                             <input type="hidden" name="_csrf" value="{{@root.csrf}}">
                             <input type="hidden" name="id" value="{{_id}}">
@@ -32,5 +33,5 @@
         </div>
     {{/each}}
 {{else}}
-    <p>No orders</p>
+    <h4>No active orders</h4>
 {{/if}}
