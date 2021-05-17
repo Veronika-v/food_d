@@ -13,7 +13,8 @@ const productSchema = new Schema({
     userId:{
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    description: String
 });
 
 productSchema.method('toClient', function (){

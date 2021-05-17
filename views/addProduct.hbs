@@ -12,6 +12,12 @@
     </div>
 
     <div class="input-field">
+        <input id="description" name="description" type="text" class="validate" value="{{data.description}}">
+        <label for="description">Description: </label>
+        <span class="helper-text" data-error="Enter the valid description"></span>
+    </div>
+
+    <div class="input-field">
         <input id="price" name="price" type="text" class="validate" required  value="{{data.price}}">
         <label for="price">Price: </label>
         <span class="helper-text" data-error="Enter the valid price"></span>

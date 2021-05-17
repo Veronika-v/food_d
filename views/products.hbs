@@ -10,12 +10,12 @@
                     </div>
                     <div class="card-content">
                         <span class="card-title">{{name}}</span>
-                        <!--<p>I am a very simple card. I am good at containing small bits of information.
-                            I am convenient because I require little markup to use effectively.</p>-->
+                        <p>{{description}}</p>
                         <p class="price">{{price}}</p>
                     </div>
                     <div class="card-action actions" >
-                        <a href="/products/{{id}}" target="_blank">Look the description</a>
+                        <!--<a href="/products/{{id}}" target="_blank">Look the description</a>-->
+
                         {{#if @root.isAuth}}
                             <a href="/products/{{id}}/edit?allow=true" >Edit </a>
                             <form action="/card/add" method="post">

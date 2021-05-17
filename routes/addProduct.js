@@ -23,7 +23,8 @@ router.post('/', auth, productsValidators, async (req, res)=> {
             data: {
                 name: req.body.name,
                 price: req.body.price,
-                img: req.body.img
+                img: req.body.img,
+                description: req.body.description
             }
         })
     }
@@ -32,6 +33,7 @@ router.post('/', auth, productsValidators, async (req, res)=> {
        name: req.body.name,
        price: req.body.price,
        img: req.body.img,
+       description: req.body.description,
        userId: req.user
     });
 
