@@ -62,6 +62,7 @@ router.post('/', auth, addressValidators, async (req, res) =>{
             products: products,
             price: calculateTotalPrice(products)
         });
+    }
 
         try {
             const user = await req.user
@@ -92,7 +93,6 @@ router.post('/', auth, addressValidators, async (req, res) =>{
         } catch (e) {
             console.log(e);
         }
-    }
 
 })
 
