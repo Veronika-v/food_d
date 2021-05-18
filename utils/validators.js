@@ -76,8 +76,7 @@ exports.productsValidators = [
 
 
 exports.addressValidators = [
-    body('address', 'Address has a wrong format')
-        .isLength({min: 3, max: 20})
-        .isAlphanumeric()
+    body('address')
+        .isLength({min: 3, max: 40}).withMessage('Address should be between 3 and 40')
         .trim()
 ]
