@@ -2,17 +2,17 @@ const {Router}= require('express');
 const {validationResult} = require('express-validator');
 const Product = require('../models/productModel');
 const router = Router();
-const auth = require('../middleware/auth');
+const authAdmin = require('../middleware/authAdmin');
 const {productsValidators} =require('../utils/validators');
 
-router.get('/', auth, (req, res)=>{
+router.get('/', authAdmin, (req, res)=>{
     res.render('addProduct', {
         title: 'Add a new product',
         isAddProduct: true
     })
 })
 
-router.post('/', auth, productsValidators, async (req, res)=> {
+router.post('/', authAdmin, productsValidators, async (req, res)=> {
     const errors = validationResult(req);
 
     if(!errors.isEmpty()){

@@ -14,13 +14,22 @@
                 <li><a href="/products">List of products</a></li>
             {{/if}}
 
-            {{#if isAuth}}
+            {{#if isAdmin}}
                 {{#if isAddProduct}}
                     <li class="active"><a href="/addProduct">Add a new product</a></li>
                 {{else}}
                     <li><a href="/addProduct">Add a new product</a></li>
                 {{/if}}
 
+                {{#if isAdminOrder}}
+                    <li class="active"><a href="/adminOrders">All orders</a></li>
+                {{else}}
+                    <li><a href="/adminOrders">All orders</a></li>
+                {{/if}}
+
+                <li><a href="/auth/logout">Log out</a></li>
+
+            {{else if isAuth}}
                 {{#if isProfile}}
                     <li class="active"><a href="/profile">Profile</a></li>
                 {{else}}
@@ -37,12 +46,6 @@
                     <li class="active"><a href="/orders">Orders</a></li>
                 {{else}}
                     <li><a href="/orders">Orders</a></li>
-                {{/if}}
-
-                {{#if isAdminOrder}}
-                    <li class="active"><a href="/adminOrders">All orders</a></li>
-                {{else}}
-                    <li><a href="/adminOrders">All orders</a></li>
                 {{/if}}
 
                 <li><a href="/auth/logout">Log out</a></li>

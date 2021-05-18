@@ -1,32 +1,37 @@
+
 <h1 class="title">Products</h1>
 
-{{#if products.length}}
-    {{#each products}}
-        <div class="row">
-            <div class="col s3 ">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="{{img}}" alt="{{name}}">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-title">{{name}}</span>
-                        <p>{{description}}</p>
-                        <p class="price">{{price}}</p>
-                    </div>
-                    <div class="card-action actions" >
-                        {{#if @root.isAuth}}
-                            <a href="/products/{{id}}/edit?allow=true" >Edit </a>
-                            <form action="/card/add" method="post">
-                                <input type="hidden" name="_csrf" value="{{@root.csrf}}">
-                                <input type="hidden" name="id" value="{{id}}">
-                                <button type="submit" class="btn ">Buy</button>
-                            </form>
-                        {{/if}}
+<div class="cards">
+    {{#if products.length}}
+        {{#each products}}
+
+                <div class="col s3 ">
+                    <div class="card ">
+                        <div class="card-image">
+                            <img src="{{img}}" alt="{{name}}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">{{name}}</span>
+                            <p>{{description}}</p>
+                            <p class="price">{{price}}</p>
+                        </div>
+                        <div class="card-action actions" >
+                            {{#if @root.isAdmin}}
+                                <a href="/products/{{id}}/edit?allow=true" >Edit </a>
+                            {{/if}}
+                            {{#if @root.isAuth}}
+                                <form action="/card/add" method="post">
+                                    <input type="hidden" name="_csrf" value="{{@root.csrf}}">
+                                    <input type="hidden" name="id" value="{{id}}">
+                                    <button type="submit" class="btn ">Buy</button>
+                                </form>
+                            {{/if}}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    {{/each}}
-{{else}}
-    <p>No products</p>
-{{/if}}
+
+        {{/each}}
+    {{else}}
+        <p>No products</p>
+    {{/if}}
+</div>

@@ -1,5 +1,9 @@
 <h1 class="title">Basket</h1>
 
+{{#if error}}
+    <p class="alert">{{error}}</p>
+{{/if}}
+
 <div id="card">
     {{#if products.length}}
         <table>

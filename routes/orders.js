@@ -1,8 +1,25 @@
 const {Router} = require('express');
 const router = Router();
+const {validationResult} = require('express-validator');
 const Order = require('../models/orderModel');
 const OrderState = require('../models/orderStateModel');
 const auth = require('../middleware/auth');
+const {addressValidators} = require('../utils/validators');
+
+
+function mapBasketItems(basket){
+    return basket.items.map( p => ({
+        ...p.productId._doc,
+        id: p.productId.id,
+        count: p.count
+    }))
+}
+
+function calculateTotalPrice(products){
+    return products.reduce((total, product)=>{
+        return total += product.price * product.count;
+    }, 0);// по умолч price=0
+}
 
 router.get('/', auth, async (req, res) =>{
     try{
@@ -27,36 +44,54 @@ router.get('/', auth, async (req, res) =>{
     }
 })
 
-router.post('/', auth, async (req, res) =>{
+router.post('/', auth, addressValidators, async (req, res) =>{
 
-    try{
-        const user = await req.user
-            .populate('basket.items.productId')
-            .execPopulate();
+    const errors = validationResult(req);
 
-        const products = user.basket.items.map( i =>({
-            count: i.count,
-            product: {...i.productId._doc}
-        }))
+    const user = await req.user
+        .populate('basket.items.productId')
+        .execPopulate();
 
-        const state= await OrderState.findOne({state: 'Active'});
+    const products = mapBasketItems(user.basket);
 
-        const order= new Order({
-            user: {
-                name: req.user.name,
-                userId: req.user
-            },
+    if(!errors.isEmpty()) {
+        return res.status(422).render('basket', {
+            title: 'Basket',
+            isCard: true,
+            error: errors.array()[0].msg,
             products: products,
-            state: state,
-            address: req.body.address
-        })
+            price: calculateTotalPrice(products)
+        });
 
-        await order.save();
-        await req.user.clearBasket();
+        try {
+            const user = await req.user
+                .populate('basket.items.productId')
+                .execPopulate();
 
-        res.redirect('/orders');
-    } catch (e){
-        console.log(e);
+            const products = user.basket.items.map(i => ({
+                count: i.count,
+                product: {...i.productId._doc}
+            }))
+
+            const state = await OrderState.findOne({state: 'Active'});
+
+            const order = new Order({
+                user: {
+                    name: req.user.name,
+                    userId: req.user
+                },
+                products: products,
+                state: state,
+                address: req.body.address
+            })
+
+            await order.save();
+            await req.user.clearBasket();
+
+            res.redirect('/orders');
+        } catch (e) {
+            console.log(e);
+        }
     }
 
 })

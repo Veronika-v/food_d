@@ -2,7 +2,7 @@ const {Router}= require('express');
 const Product = require('../models/productModel');
 const {validationResult} = require('express-validator');
 const router = Router();
-const auth = require('../middleware/auth');
+const authAdmin = require('../middleware/authAdmin');
 const {productsValidators} = require('../utils/validators');
 
 router.get('/', async (req, res)=>{
@@ -14,7 +14,7 @@ router.get('/', async (req, res)=>{
     });
 })
 
-router.post('/remove', auth, async (req,res)=>{
+router.post('/remove', authAdmin, async (req,res)=>{
     try{
         await Product.deleteOne({_id: req.body.id});
         res.redirect('/products');
@@ -25,7 +25,7 @@ router.post('/remove', auth, async (req,res)=>{
 
 })
 
-router.get('/:id/edit', auth, async (req, res)=>{
+router.get('/:id/edit', authAdmin, async (req, res)=>{
     if(!req.query.allow){
         return res.redirect('/')
     }
@@ -37,7 +37,7 @@ router.get('/:id/edit', auth, async (req, res)=>{
     })
 })
 
-router.post('/edit', auth, productsValidators,  async (req, res)=>{
+router.post('/edit', authAdmin, productsValidators,  async (req, res)=>{
     const errors = validationResult(req);
     const {id}= req.body;
 

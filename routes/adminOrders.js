@@ -2,7 +2,7 @@ const {Router} = require('express');
 const router = Router();
 const Order = require('../models/orderModel');
 const OrderState = require('../models/orderStateModel');
-const auth = require('../middleware/auth');
+const authAdmin = require('../middleware/authAdmin');
 const mongoose = require('mongoose');
 
 /*function mapOrderItems(orders){
@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
     }))
 }*/
 
-router.get('/', auth, async (req, res) =>{
+router.get('/', authAdmin, async (req, res) =>{
     try{
         const state= await OrderState.findOne({state: 'Active'});
         const orders = await Order.find({
@@ -38,7 +38,7 @@ router.get('/', auth, async (req, res) =>{
     }
 })
 
-router.post('/', auth, async (req, res) =>{
+router.post('/', authAdmin, async (req, res) =>{
 
     try{
         const {id}= req.body;

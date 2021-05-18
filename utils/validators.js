@@ -73,3 +73,11 @@ exports.productsValidators = [
     body('img', 'Enter the correct URL')
         .isURL()
 ]
+
+
+exports.addressValidators = [
+    body('address', 'Address has a wrong format')
+        .isLength({min: 3, max: 20})
+        .isAlphanumeric()
+        .trim()
+]
