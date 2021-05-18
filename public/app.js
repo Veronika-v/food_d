@@ -47,7 +47,7 @@ if($card){
                                 <td class="price small">`+toCurrency(p.price)+`</td>
                                 <td>${p.count}</td>
                                 <td>
-                                    <button class="btn js-remove redd" data-id="${p.id}">Delete</button>
+                                    <button class="btn js-remove redd" data-id="${p.id}" data-csrf="${csrf}">Delete</button>
                                 </td>
                             </tr>
                             `
