@@ -1,5 +1,22 @@
 
-<h1 class="title">Products</h1>
+<h1 class="title">Products</h1></br>
+
+<form action="/products/search" method="post">
+    <div class="row" style="padding-left:150px  ">
+        <div class="col s8 ">
+            <div class="input-field">
+                <input id="pName" name="pName" type="text" class="validate" required>
+                <label for="pName">Product name: </label>
+                <span class="helper-text" data-error="Enter the valid name"></span>
+            </div>
+        </div>
+        <input type="hidden" name="_csrf" value="{{@root.csrf}}">
+        <div class="col s4 ">
+            <button type="submit" class=" btn js-search" data-csrf="{{@root.csrf}}">Search </button>
+        </div>
+    </div>
+</form>
+
 
 <div class="cards shown">
     {{#if products.length}}
@@ -17,7 +34,7 @@
                         </div>
                         <div class="card-action actions" >
                             {{#if @root.isAdmin}}
-                                <a href="/products/{{id}}/edit?allow=true" >Edit </a>
+                                <a class="link" href="/products/{{id}}/edit?allow=true" >Edit </a>
                             {{/if}}
                             {{#if @root.isAuth}}
                                 <form action="/card/add" method="post">

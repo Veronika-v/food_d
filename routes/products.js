@@ -14,6 +14,18 @@ router.get('/', async (req, res)=>{
     });
 })
 
+router.post('/search', async (req, res)=>{
+    const productName = req.body.pName;
+    console.log(productName);
+    const products = await Product.find({'name': new RegExp(".*" + productName + ".*")});
+
+    res.render('products', {
+        title: 'List of products',
+        isProducts: true,
+        products
+    });
+})
+
 router.post('/remove', authAdmin, async (req,res)=>{
     try{
         await Product.deleteOne({_id: req.body.id});
