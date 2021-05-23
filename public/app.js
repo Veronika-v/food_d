@@ -69,7 +69,7 @@ if ($card) {
                         $card.querySelector('tbody').innerHTML = html;
                         $card.querySelector('.price.total').textContent = toCurrency(card.price);
                     } else {
-                        $card.innerHTML = '<p>The basket is empty</p>'
+                        $card.innerHTML = '<h4>The basket is empty</h4>'
                     }
                 })
         };
@@ -121,9 +121,9 @@ if ($card) {
                     </div>
                             `
                         }).join('')
-                        document.querySelector('#card').innerHTML = html;
+                        $card.innerHTML = html;
                     } else {
-                        $card.innerHTML = '<p>No active orders</p>'
+                        $card.innerHTML = '<h4>No active orders</h4>'
                     }
 
                 })
@@ -181,7 +181,7 @@ if ($card) {
                         }).join('');
                         document.querySelector('#products').innerHTML = html;
                     } else {
-                        $card.innerHTML = '<p>No products were found</p>'
+                        document.querySelector('#products').innerHTML = '<h4>No products were found</h4>'
                     }
                 })
         };
