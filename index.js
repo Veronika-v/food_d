@@ -1,9 +1,10 @@
 const express =require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const mongoose = require('mongoose');
-//const helmet = require('helmet');
+const socketIO = require('socket.io');
 const compression = require('compression');
 const Handlebars = require('handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
@@ -23,9 +24,13 @@ const userMiddleware = require('./middleware/user');
 const errorHandler = require('./middleware/error');
 const fileMiddleware = require('./middleware/file');
 const keys = require('./keys/indexKeys');
+const http = require("http");
 
 const PORT = process.env.PORT || 3000;
+
 const app =express();
+const server = http.createServer(app);
+const io = socketIO(server);
 
 
 const hbs= exphbs.create({
@@ -44,7 +49,13 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
 
+//app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
+app.use((req, res, next)=>{
+    req.io= io;
+    next();
+})
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -58,7 +69,6 @@ app.use(session({
 app.use(fileMiddleware.single('avatar'));
 app.use(csrf());
 app.use(flash());
-//app.use(helmet());
 app.use(compression());
 app.use(varMiddleware);
 app.use(userMiddleware);
@@ -86,7 +96,7 @@ async function start(){
             useFindAndModify: false
         });
 
-        app.listen(PORT, () => {
+        server.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
         });
     }
