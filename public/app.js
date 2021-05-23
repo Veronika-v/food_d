@@ -155,7 +155,7 @@ if ($card) {
                                         <div class="card-content">
                                             <span class="card-title">${p.name}</span>
                                             <p>${p.description}</p>
-                                            <p class="price">${p.price}</p>
+                                            <p class="price">${toCurrency(p.price)}</p>
                                         </div>
                                         <div class="card-action actions" >
                                             <script>
