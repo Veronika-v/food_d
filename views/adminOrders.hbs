@@ -1,5 +1,9 @@
+<script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+
+
 <h1 class="title">All orders</h1>
 
+<div id="card">
 {{#if orders.length}}
     {{#each orders}}
         <div class="col s6 offset-s3">
@@ -22,11 +26,12 @@
                     <hr>
                     <div class="sp">
                         <p><em><b>Total price: </b></em><span class="price">{{price}}</span> </p>
-                        <form action="/adminOrders/" method="post">
-                            <input type="hidden" name="_csrf" value="{{@root.csrf}}">
-                            <input type="hidden" name="id" value="{{_id}}">
-                            <button type="submit" class="btn ">Delivered</button>
-                        </form>
+                        <!--<form action="/adminOrders/" method="post">
+                            <input type="hidden" name="_csrf" value="{@root.csrf}}">
+                            <input type="hidden" name="id" value="{_id}}">
+                            <button type="submit" class="btn js-done" data-csrf="{@root.csrf}}" onclick="makeDelivering('{_id}}', '{user.name}}')">Delivered</button>
+                        </form>-->
+                        <button class="btn js-done" data-id="{{_id}}" data-csrf="{{@root.csrf}}" onclick="makeDelivering('{{_id}}', '{{user.name}}')">Delivered</button>
                     </div>
                 </div>
             </div>
@@ -35,3 +40,17 @@
 {{else}}
     <h4>No active orders</h4>
 {{/if}}
+</div>
+
+
+<script>
+    const socket = io('http://localhost:3000')
+
+    socket.on('connection');
+
+    const makeDelivering = (orderId, userId)=>{
+
+        console.log('makeOrder function, socketID'+ socket.id)
+        socket.emit('done', orderId, userId)
+    }
+</script>

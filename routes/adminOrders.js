@@ -42,13 +42,17 @@ router.post('/', authAdmin, async (req, res) =>{
 
     try{
         const {id}= req.body;
-        //console.log(JSON.stringify(req.body));
 
-        const state= await OrderState.findOne({state: 'Passive'});
+        const stateP= await OrderState.findOne({state: 'Passive'});
+        await Order.findByIdAndUpdate(id, {$set: { state: stateP}});
 
-        await Order.findByIdAndUpdate(id, {$set: { state: state}});
+        const stateA= await OrderState.findOne({state: 'Active'});
+        const orders = await Order.find({
+            'state': stateA
+        }).populate('user.userId', 'email');
 
-        res.redirect('/adminOrders');
+        //res.redirect('/adminOrders');
+        res.status(200).json(orders);
 
     } catch (e){
         console.log(e);
