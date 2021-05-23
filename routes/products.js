@@ -16,14 +16,16 @@ router.get('/', async (req, res)=>{
 
 router.post('/search', async (req, res)=>{
     const productName = req.body.pName;
-    console.log(productName);
     const products = await Product.find({'name': new RegExp(".*" + productName + ".*")});
 
-    res.render('products', {
+
+    /*res.render('products', {
         title: 'List of products',
         isProducts: true,
         products
-    });
+    });*/
+
+    res.status(200).json(products);
 })
 
 router.post('/remove', authAdmin, async (req,res)=>{

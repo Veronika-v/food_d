@@ -1,7 +1,7 @@
 
 <h1 class="title">Products</h1></br>
 
-<form action="/products/search" method="post">
+<div id="card">
     <div class="row" style="padding-left:150px  ">
         <div class="col s8 ">
             <div class="input-field">
@@ -12,13 +12,13 @@
         </div>
         <input type="hidden" name="_csrf" value="{{@root.csrf}}">
         <div class="col s4 ">
-            <button type="submit" class=" btn js-search" data-csrf="{{@root.csrf}}">Search </button>
+            <button class=" btn js-search" data-csrf="{{@root.csrf}}">Search </button>
         </div>
     </div>
-</form>
+</div>
 
-
-<div class="cards shown">
+<div id="card">
+<div class="cards shown" id="products">
     {{#if products.length}}
         {{#each products}}
 
@@ -37,7 +37,7 @@
                                 <a class="link" href="/products/{{id}}/edit?allow=true" >Edit </a>
                             {{/if}}
                             {{#if @root.isAuth}}
-                                <form action="/card/add" method="post">
+                                <form action="/card/add" method="post" class="f">
                                     <input type="hidden" name="_csrf" value="{{@root.csrf}}">
                                     <input type="hidden" name="id" value="{{id}}">
                                     <button type="submit" class="btn ">Buy</button>
@@ -51,4 +51,5 @@
     {{else}}
         <p>No products</p>
     {{/if}}
+</div>
 </div>
