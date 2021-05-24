@@ -12,7 +12,7 @@
         </div>
         <input type="hidden" name="_csrf" value="{{@root.csrf}}">
         <div class="col s4 ">
-            <button class=" btn js-search" data-csrf="{{@root.csrf}}">Search </button>
+            <button class=" btn js-search" data-adminn="{{@root.isAdmin}}" data-user="{{@root.isAuth}}" data-csrf="{{@root.csrf}}">Search </button>
         </div>
     </div>
 </div>
@@ -34,10 +34,10 @@
                         </div>
                         <div class="card-action actions" >
                             {{#if @root.isAdmin}}
-                                <a class="link" href="/products/{{id}}/edit?allow=true" >Edit </a>
+                                <a id="link" href="/products/{{id}}/edit?allow=true" >Edit </a>
                             {{/if}}
                             {{#if @root.isAuth}}
-                                <form action="/card/add" method="post" class="f">
+                                <form action="/card/add" method="post" id="f">
                                     <input type="hidden" name="_csrf" value="{{@root.csrf}}">
                                     <input type="hidden" name="id" value="{{id}}">
                                     <button type="submit" class="btn ">Buy</button>

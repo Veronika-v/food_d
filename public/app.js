@@ -16,6 +16,26 @@ const toDate = date => {
     }).format(new Date(date));
 }
 
+const buttonForSearchProducts = (admin, user, pId, csrf) =>{
+    let linkElem = document.querySelector("#link");
+    let linkStr = `<a href="/products/${pId}/edit?allow=true" >Edit </a>`;
+    console.log(linkStr)
+    console.log(pId)
+
+    let formElem = document.querySelector("#f");
+    let formStr = `<form action="/card/add" method="post">
+         <input type="hidden" name="_csrf" value="${csrf}">
+         <input type="hidden" name="id" value="${pId}">
+         <button type="submit" class="btn ">Buy</button>
+         </form>`
+    console.log(formStr)
+
+    if(admin)
+        return linkElem.innerHTML = linkStr;
+    if(user)
+        return formElem.innerHTML = formStr;
+}
+
 
 document.querySelectorAll('.price').forEach(node => {
     node.textContent = toCurrency(node.textContent);
@@ -120,6 +140,8 @@ if ($card) {
 
         if (event.target.classList.contains('js-search')) {
             const csrf = event.target.dataset.csrf;
+            const adminn = event.target.dataset.adminn;
+            const user = event.target.dataset.user;
             const pName = document.querySelector('#pName').value;
 
             fetch('/products/search', {
@@ -147,22 +169,7 @@ if ($card) {
                                             <p class="price">${toCurrency(p.price)}</p>
                                         </div>
                                         <div class="card-action actions" >
-                                            <script>
-                                            let linkElem = document.querySelector(".link");
-                                            let linkStr = '<a href="/products/${p.id}/edit?allow=true" >Edit </a>';
-                                            
-                                            let formElem = document.querySelector(".f");
-                                            let formStr = '<form action="/card/add" method="post">'+
-                                                       +' <input type="hidden" name="_csrf" value="${csrf}">'+
-                                                       +' <input type="hidden" name="id" value="${p.id}">'+
-                                                       +' <button type="submit" class="btn ">Buy</button>'+
-                                                       +' </form>';
-                                            
-                                            if(@root.isAdmin)
-                                                linkElem.innerHTML = linkStr;
-                                            if(@root.isAuth)
-                                                formElem.innerHTML = formStr;
-                                            </script>
+                                            ${buttonForSearchProducts(adminn, user, p._id, csrf)}
                                         </div>
                                     </div>
                                 </div>    
