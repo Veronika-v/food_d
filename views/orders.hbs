@@ -2,12 +2,13 @@
 
 <div id="orderLink">
     <h5>
-        <a class="underline js-orderLink" href="/orders/active">New</a>
+        <a class="underline js-orderActiveLink" href="#">New</a>
         <!--<a class="underline verticalLine js-orderLink" href="/orders/inProgress">In progress</a>-->
-        <a class="underline verticalLine js-orderLink" href="/orders/passive">Delivered</a>
+        <a class="underline verticalLine js-orderPassiveLink" href="#">Delivered</a>
     </h5></br>
 </div>
 
+<div id="card">
 {{#if orders.length}}
     {{#each orders}}
         <div class="col s6 offset-s3">
@@ -20,7 +21,7 @@
                     <p id="user" data-userEmail="{{user.userId.email}}"><em><b>{{user.name}}</b></em> ({{user.userId.email}})</p>
                     <p><em><b>Address:</b></em> {{address}}</p>
 
-                    <ol>
+                    <ol id="list">
                         {{#each products}}
                             <li>
                                 <b>{{product.name}}</b> (x{{count}})
@@ -37,3 +38,4 @@
 {{else}}
     <h4>No orders with that state</h4>
 {{/if}}
+</div>

@@ -22,7 +22,7 @@ async function GetOrdersByState(req, res, orderState){
             'state': state, 'user.userId': req.user._id
         }).populate('user.userId', 'email');
 
-        res.render('orders', {
+        /*res.render('orders', {
             isAdminOrder: true,
             title: 'Orders',
             orders: orders.map( o=>{
@@ -33,7 +33,8 @@ async function GetOrdersByState(req, res, orderState){
                     }, 0)
                 }
             })
-        })
+        })*/
+        res.status(200).json(orders);
     }catch (e) {
         console.log(e);
     }
