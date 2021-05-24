@@ -19,7 +19,7 @@ async function GetOrdersByState(req, res, orderState){
     try{
         const state= await OrderState.findOne({state: orderState});
         const orders = await Order.find({
-            'state': state
+            'state': state, 'user.userId': req.user._id
         }).populate('user.userId', 'email');
 
         res.render('orders', {
@@ -50,7 +50,7 @@ router.get('/', auth, async (req, res) =>{
     try{
         const state= await OrderState.findOne({state: 'Active'});
         const orders = await Order.find({
-            'state': state
+            'state': state, 'user.userId': req.user._id
         }).populate('user.userId');
 
         res.render('orders', {
