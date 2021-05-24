@@ -16,19 +16,6 @@ const toDate = date => {
     }).format(new Date(date));
 }
 
-const socketConnection = (orderID, user) => {
-    let users = [];
-    req.io.on('connection', socket => {
-        console.log('connected:' + socket.id);
-
-        socket.on('done', (orderID, user) => {
-
-            socket.broadcast.emit('orderDone', orderID, user)
-        })
-
-    })
-}
-
 
 document.querySelectorAll('.price').forEach(node => {
     node.textContent = toCurrency(node.textContent);
@@ -77,6 +64,9 @@ if ($card) {
         if (event.target.classList.contains('js-done')) {
             const csrf = event.target.dataset.csrf;
             const id = event.target.dataset.id;
+            const user = event.target.dataset.user;
+            console.log('user:' +user);
+
 
             console.log('orderId: ' + id);
 
@@ -100,20 +90,19 @@ if ($card) {
                     <span class="card-title">
                         <b>Order</b> <small>${o._id}</small>
                     </span>
-                    <p class="date">${o.date}</p>
+                    <p class="date">${toDate(o.date)}</p>
                     <p><em><b>${o.user.name}</b></em> (${o.user.userId.email})</p>
                     <p><em><b>Address:</b></em> ${o.address}</p>
 
-                    <ol>${o.products.map(p =>
-                            {
-                                $card.querySelector('.card').innerHTML += '<li><b>${p.product.name}</b> (x${p.count})</li>';
-                            })}</ol>
+                    <ol id="list">${o.products.map(p =>
+                            {return `<li><b>${p.product.name}</b> (x${p.count})</li>`
+                            }).join('')}</ol>
                     <hr>
                     <div class="sp">
                         <p><em><b>Total price: </b></em><span class="price">${toCurrency(o.products.reduce((total, p)=>{
                                 return total += p.count * p.product.price
                             }, 0))}</span> </p>
-                         <button class="btn js-done" data-id="${o._id}" data-csrf="${csrf}" onclick="makeDelivering('${o._id}', '${o.user.name}')">Delivered</button>
+                         <button class="btn js-done" data-id="${o._id}" data-csrf="${csrf}" data-csrf="${csrf}" data-user="${o.user.userId}">In progress</button>
                        
                     </div>
                     </div>
@@ -185,6 +174,108 @@ if ($card) {
                     }
                 })
         };
+    })
+}
+
+
+const $orderLink = document.querySelector('#orderLink');
+if ($orderLink) {
+    $orderLink.addEventListener('click', event => {
+        if (event.target.classList.contains('js-orderActive')) {
+            const csrf = event.target.dataset.csrf;
+
+            fetch('/adminOrders/active', {
+                method: 'get',
+                headers: {
+                    'X-XSRF-TOKEN': csrf
+                }
+            }).then(res => res.json())
+                .then(card => {
+                    if (card.length) {
+                        const html = card.map(o => {
+                            return `
+        <div class="col s6 offset-s3">
+            <div class="card">
+                <div class="card-action">
+                    <span class="card-title">
+                        <b>Order</b> <small>${o._id}</small>
+                    </span>
+                    <p class="date">${toDate(o.date)}</p>
+                    <p><em><b>${o.user.name}</b></em> (${o.user.userId.email})</p>
+                    <p><em><b>Address:</b></em> ${o.address}</p>
+
+                    
+                    <ol id="list">${o.products.map(p =>
+                            {return `<li><b>${p.product.name}</b> (x${p.count})</li>`
+                            }).join('')}</ol>
+                    <hr>
+                    <div class="sp">
+                        <p><em><b>Total price: </b></em><span class="price">${toCurrency(o.products.reduce((total, p) => {
+                                return total += p.count * p.product.price
+                            }, 0))}</span> 
+                        </p>
+                        <button class="btn js-done" data-id="${o._id}" data-csrf="${csrf}" data-csrf="${csrf}" data-user="${o.user.userId}">In progress</button>                  
+                    </div>
+                </div>
+            </div>
+        </div>
+                            `
+                        }).join('')
+                        document.querySelector('#card').innerHTML = html;
+                    } else {
+                        document.querySelector('#card').innerHTML = '<h4>No delivered orders</h4>'
+                    }
+                })
+            }
+    });
+
+
+    $orderLink.addEventListener('click', event => {
+        if (event.target.classList.contains('js-orderPassive')) {
+            const csrf = event.target.dataset.csrf;
+
+            fetch('/adminOrders/passive', {
+                method: 'get',
+                headers: {
+                    'X-XSRF-TOKEN': csrf
+                }
+            }).then(res => res.json())
+                .then(card => {
+                    if (card.length) {
+                        const html = card.map(o => {
+                            return `
+<div class="col s6 offset-s3">
+            <div class="card">
+                <div class="card-action">
+                    <span class="card-title">
+                        <b>Order</b> <small>${o._id}</small>
+                    </span>
+                    <p class="date">${toDate(o.date)}</p>
+                    <p><em><b>${o.user.name}</b></em> (${o.user.userId.email})</p>
+                    <p><em><b>Address:</b></em> ${o.address}</p>
+
+                    <ol id="list">${o.products.map(p =>
+                            {return `<li><b>${p.product.name}</b> (x${p.count})</li>`
+                            }).join('')}</ol>
+                    <hr>
+                    <div class="sp">
+                        <p><em><b>Total price: </b></em><span class="price">${toCurrency(o.products.reduce((total, p) => {
+                                return total += p.count * p.product.price
+                            }, 0))}</span> 
+                        </p>
+                                              
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                            `
+                        }).join('')
+                        document.querySelector('#card').innerHTML = html;
+                    } else {
+                        document.querySelector('#card').innerHTML = '<h4>No delivered orders</h4>'
+                    }
+                })
+        }
     })
 }
 

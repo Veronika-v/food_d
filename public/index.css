@@ -178,6 +178,10 @@ a.underline{
 
 }
 
-
+.verticalLine {
+    border-width: 0 0 0 2px;
+    border-style: solid;
+    padding-left: 10px;
+}
 
 

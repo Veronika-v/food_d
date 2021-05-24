@@ -31,5 +31,15 @@
 
     <input type="hidden" name="_csrf" value="{{csrf}}">
 
-    <button class=" btn">Add </button>
+    <button class=" btn" onclick="done()">Add </button>
 </form>
+
+<script>
+
+        const done = ()=>
+        {
+            const pName = document.querySelector('#name').value;
+            console.log('done function, socketID' + socket.id)
+            socket.emit('done', pName)
+        }
+</script>

@@ -57,6 +57,17 @@ app.use((req, res, next)=>{
     next();
 })
 
+
+let users = [];
+io.on('connection', socket => {
+    console.log('connected:'+ socket.id);
+
+    socket.on('done', name => {
+        socket.broadcast.emit('orderDone', name)
+    })
+
+})
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(express.urlencoded({extended: true}));

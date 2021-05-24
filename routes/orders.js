@@ -15,6 +15,30 @@ function mapBasketItems(basket){
     }))
 }
 
+async function GetOrdersByState(req, res, orderState){
+    try{
+        const state= await OrderState.findOne({state: orderState});
+        const orders = await Order.find({
+            'state': state
+        }).populate('user.userId', 'email');
+
+        res.render('orders', {
+            isAdminOrder: true,
+            title: 'Orders',
+            orders: orders.map( o=>{
+                return {
+                    ...o._doc,
+                    price: o.products.reduce((total, p)=>{
+                        return total += p.count * p.product.price
+                    }, 0)
+                }
+            })
+        })
+    }catch (e) {
+        console.log(e);
+    }
+}
+
 function calculateTotalPrice(products){
     return products.reduce((total, product)=>{
         return total += product.price * product.count;
@@ -22,9 +46,11 @@ function calculateTotalPrice(products){
 }
 
 router.get('/', auth, async (req, res) =>{
+
     try{
+        const state= await OrderState.findOne({state: 'Active'});
         const orders = await Order.find({
-            'user.userId': req.user._id
+            'state': state
         }).populate('user.userId');
 
         res.render('orders', {
@@ -42,6 +68,14 @@ router.get('/', auth, async (req, res) =>{
     }catch (e) {
         console.log(e);
     }
+})
+
+router.get('/active', auth, async (req, res) =>{
+    await GetOrdersByState(req, res,'Active');
+})
+
+router.get('/passive', auth, async (req, res) =>{
+    await GetOrdersByState(req, res,'Passive');
 })
 
 router.post('/', auth, addressValidators, async (req, res) =>{

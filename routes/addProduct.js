@@ -6,6 +6,7 @@ const authAdmin = require('../middleware/authAdmin');
 const {productsValidators} =require('../utils/validators');
 
 router.get('/', authAdmin, (req, res)=>{
+
     res.render('addProduct', {
         title: 'Add a new product',
         isAddProduct: true
@@ -43,6 +44,9 @@ router.post('/', authAdmin, productsValidators, async (req, res)=> {
     } catch (err){
         console.log(err);
     }
+
+
+
 
 })
 

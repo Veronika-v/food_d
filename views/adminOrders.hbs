@@ -1,7 +1,12 @@
-<script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+<h1 class="title">Orders</h1>
 
-
-<h1 class="title">All orders</h1>
+<div id="orderLink">
+    <h5>
+        <a class="underline js-orderActive" data-csrf="{{@root.csrf}}" href="#">New</a>
+        <!--<a class="underline verticalLine js-orderLink" href="/adminOrders/inProgress">In progress</a>-->
+        <a class="underline verticalLine js-orderPassive" data-csrf="{{@root.csrf}}" href="#">Delivered</a>
+    </h5></br>
+</div>
 
 <div id="card">
 {{#if orders.length}}
@@ -16,9 +21,9 @@
                     <p><em><b>{{user.name}}</b></em> ({{user.userId.email}})</p>
                     <p><em><b>Address:</b></em> {{address}}</p>
 
-                    <ol>
+                    <ol id="list">
                         {{#each products}}
-                            <li>
+                            <li >
                                 <b>{{product.name}}</b> (x{{count}})
                             </li>
                         {{/each}}
@@ -26,31 +31,14 @@
                     <hr>
                     <div class="sp">
                         <p><em><b>Total price: </b></em><span class="price">{{price}}</span> </p>
-                        <!--<form action="/adminOrders/" method="post">
-                            <input type="hidden" name="_csrf" value="{@root.csrf}}">
-                            <input type="hidden" name="id" value="{_id}}">
-                            <button type="submit" class="btn js-done" data-csrf="{@root.csrf}}" onclick="makeDelivering('{_id}}', '{user.name}}')">Delivered</button>
-                        </form>-->
-                        <button class="btn js-done" data-id="{{_id}}" data-csrf="{{@root.csrf}}" onclick="makeDelivering('{{_id}}', '{{user.name}}')">Delivered</button>
+                        <button class="btn js-done" data-id="{{_id}}" data-csrf="{{@root.csrf}}" data-user="{{user.userId}}">In progress</button>
                     </div>
                 </div>
             </div>
         </div>
     {{/each}}
 {{else}}
-    <h4>No active orders</h4>
+    <h4>No orders with that state were found</h4>
 {{/if}}
 </div>
 
-
-<script>
-    const socket = io('http://localhost:3000')
-
-    socket.on('connection');
-
-    const makeDelivering = (orderId, userId)=>{
-
-        console.log('makeOrder function, socketID'+ socket.id)
-        socket.emit('done', orderId, userId)
-    }
-</script>
