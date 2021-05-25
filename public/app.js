@@ -23,7 +23,7 @@ const buttonForSearchProducts = (admin, user, pId, csrf) =>{
     console.log(pId)
 
     let formElem = document.querySelector("#f");
-    let formStr = `<form action="/card/add" method="post">
+    let formStr = `<form action="/card/add" method="post" id="f">
          <input type="hidden" name="_csrf" value="${csrf}">
          <input type="hidden" name="id" value="${pId}">
          <button type="submit" class="btn ">Buy</button>
@@ -31,9 +31,24 @@ const buttonForSearchProducts = (admin, user, pId, csrf) =>{
     console.log(formStr)
 
     if(admin)
-        return linkElem.innerHTML = linkStr;
+        if(linkElem!=null) {
+            return linkElem.innerHTML = linkStr;
+        }
+        else{
+            return `<a id="link" href="/products/${pId}/edit?allow=true" >Edit </a>`
+        }
+
     if(user)
-        return formElem.innerHTML = formStr;
+        if(formElem!=null) {
+            return formElem.innerHTML = formStr;
+        }
+        else{
+            return `<form action="/card/add" method="post" id="f">
+         <input type="hidden" name="_csrf" value="${csrf}">
+         <input type="hidden" name="id" value="${pId}">
+         <button type="submit" class="btn ">Buy</button>
+         </form>`
+        }
 }
 
 const forAsyncLinks = (url, event) =>{
@@ -168,7 +183,7 @@ if ($card) {
                         <p><em><b>Total price: </b></em><span class="price">${toCurrency(o.products.reduce((total, p)=>{
                                 return total += p.count * p.product.price
                             }, 0))}</span> </p>
-                         <button class="btn js-done" data-id="${o._id}" data-csrf="${csrf}" data-csrf="${csrf}" data-user="${o.user.userId}">In progress</button>
+                         <button class="btn js-done" data-id="${o._id}" data-csrf="${csrf}" data-csrf="${csrf}" data-user="${o.user.userId}">Delivered</button>
                        
                     </div>
                     </div>
@@ -267,7 +282,7 @@ if ($orderLink) {
                                 return total += p.count * p.product.price
                             }, 0))}</span> 
                         </p>
-                        <button class="btn js-done" data-id="${o._id}" data-csrf="${csrf}" data-csrf="${csrf}" data-user="${o.user.userId}">In progress</button>                  
+                        <button class="btn js-done" data-id="${o._id}" data-csrf="${csrf}" data-csrf="${csrf}" data-user="${o.user.userId}">Delivered</button>                  
                     </div>
                 </div>
             </div>

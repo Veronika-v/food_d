@@ -58,12 +58,12 @@ app.use((req, res, next)=>{
 })
 
 
-let users = [];
+
 io.on('connection', socket => {
     console.log('connected:'+ socket.id);
 
     socket.on('done', name => {
-        socket.broadcast.emit('orderDone', name)
+        socket.broadcast.emit('productDone', name)
     })
 
 })
